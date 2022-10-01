@@ -263,7 +263,7 @@ func (s *Server) postHandler(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 
-			s.logger.Printf("Uploading %s %s %d %s", filename)
+			s.logger.Printf("Uploading %s", filename)
 
 			if err = s.storage.Put(r.Context(), filename, file); err != nil {
 				s.logger.Printf("Backend storage error: %s", err.Error())
@@ -365,7 +365,7 @@ func (s *Server) putHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	s.logger.Printf("Uploading %s %s %d %s", filename)
+	s.logger.Printf("Uploading %s", filename)
 
 	if err = s.storage.Put(r.Context(), filename, file); err != nil {
 		s.logger.Printf("Error putting new file: %s", err.Error())
