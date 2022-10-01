@@ -36,13 +36,11 @@ import (
 	htmlTemplate "html/template"
 	"io"
 	"io/ioutil"
-	"mime"
 	"net"
 	"net/http"
 	"net/url"
 	"os"
 	"path"
-	"path/filepath"
 	"strconv"
 	"strings"
 	"sync"
@@ -210,7 +208,6 @@ func (s *Server) postHandler(w http.ResponseWriter, r *http.Request) {
 	for _, fHeaders := range r.MultipartForm.File {
 		for _, fHeader := range fHeaders {
 			filename := sanitize(fHeader.Filename)
-			contentType := mime.TypeByExtension(filepath.Ext(fHeader.Filename))
 
 			var f io.Reader
 			var err error
@@ -266,7 +263,7 @@ func (s *Server) postHandler(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 
-			s.logger.Printf("Uploading %s %s %d %s", filename, contentLength, contentType)
+			s.logger.Printf("Uploading %s %s %d %s", filename)
 
 			if err = s.storage.Put(r.Context(), filename, file); err != nil {
 				s.logger.Printf("Backend storage error: %s", err.Error())
@@ -368,9 +365,7 @@ func (s *Server) putHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	contentType := mime.TypeByExtension(filepath.Ext(vars["filename"]))
-
-	s.logger.Printf("Uploading %s %s %d %s", filename, contentLength, contentType)
+	s.logger.Printf("Uploading %s %s %d %s", filename)
 
 	if err = s.storage.Put(r.Context(), filename, file); err != nil {
 		s.logger.Printf("Error putting new file: %s", err.Error())
