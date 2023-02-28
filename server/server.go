@@ -433,7 +433,7 @@ func (s *Server) Run() {
 	r.HandleFunc("/{filename:(?:favicon\\.ico|robots\\.txt|health\\.html)}", s.basicAuthHandler(http.HandlerFunc(s.putHandler))).Methods("PUT")
 
 	r.HandleFunc("/health.html", healthHandler).Methods("GET")
-	r.HandleFunc("/", s.viewHandler).Methods("GET")
+	// r.HandleFunc("/", s.viewHandler).Methods("GET")
 
 
 	r.HandleFunc("/{filename}", s.headHandler).Methods("HEAD")
@@ -452,7 +452,7 @@ func (s *Server) Run() {
 	r.HandleFunc("/put/{filename}", s.basicAuthHandler(http.HandlerFunc(s.putHandler))).Methods("PUT")
 	r.HandleFunc("/upload/{filename}", s.basicAuthHandler(http.HandlerFunc(s.putHandler))).Methods("PUT")
 	r.HandleFunc("/{filename}", s.basicAuthHandler(http.HandlerFunc(s.putHandler))).Methods("PUT")
-	r.HandleFunc("/", s.basicAuthHandler(http.HandlerFunc(s.postHandler))).Methods("POST")
+	// r.HandleFunc("/", s.basicAuthHandler(http.HandlerFunc(s.postHandler))).Methods("POST")
 	// r.HandleFunc("/{page}", viewHandler).Methods("GET")
 
 	r.NotFoundHandler = http.HandlerFunc(s.notFoundHandler)
